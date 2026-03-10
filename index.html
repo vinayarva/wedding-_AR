@@ -3,40 +3,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-    <style>
-      body { margin: 0; overflow: hidden; }
-    </style>
+    <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
+    
+    <script>
+      // This script forces the 3D text to always face your phone camera
+      AFRAME.registerComponent('face-camera', {
+        tick: function () {
+          this.el.object3D.lookAt(this.el.sceneEl.camera.el.object3D.position);
+        }
+      });
+    </script>
   </head>
   <body>
-    <a-scene 
-      mindar-image="imageTargetSrc: targets.mind; autoStart: true; uiLoading: yes; uiScanning: yes;" 
-      color-space="sRGB" 
-      renderer="colorManagement: true, physicallyCorrectLights" 
-      vr-mode-ui="enabled: false" 
-      device-orientation-permission-ui="enabled: false">
+    <a-scene mindar-image="imageTargetSrc: targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false">
       
+      <a-assets>
+        <a-asset-item id="coupleModel" src="couple.glb"></a-asset-item>
+        <a-asset-item id="optimerBold" src="https://rawgit.com/mrdoob/three.js/dev/examples/fonts/helvetiker_bold.typeface.json"></a-asset-item>
+      </a-assets>
+
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-light type="ambient" intensity="1"></a-light>
 
       <a-entity mindar-image-target="targetIndex: 0">
         
-        <a-box position="0 0 0" scale="0.5 0.5 0.1" material="color: yellow; opacity: 0.8"></a-box>
+        <a-gltf-model src="#coupleModel" position="0 0 0" scale="0.02 0.02 0.02"></a-gltf-model>
 
-        <a-text 
-          value="RAJU\nWEDS\nKUMARI" 
-          color="#FF0000" 
-          align="center" 
-          position="0 0 0.1" 
-          scale="2 2 2"
-          width="4"
-          wrap-count="10">
-        </a-text>
-
-        <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear">
-           <a-text value="❤" color="#FF0000" position="0.8 0 0" scale="3 3 3"></a-text>
+        <a-entity position="0 0.8 0.2" face-camera>
+          
+          <a-entity text-geometry="value: RAJU; font: #optimerBold; height: 0.1; size: 0.2;" material="color: red;" position="-0.3 0.3 0"></a-entity>
+          
+          <a-entity text-geometry="value: WEDS; font: #optimerBold; height: 0.1; size: 0.15;" material="color: red;" position="-0.25 0.1 0"></a-entity>
+          
+          <a-entity text-geometry="value: KUMARI; font: #optimerBold; height: 0.1; size: 0.2;" material="color: red;" position="-0.4 -0.15 0"></a-entity>
+          
         </a-entity>
 
       </a-entity>
-      
     </a-scene>
   </body>
 </html>
