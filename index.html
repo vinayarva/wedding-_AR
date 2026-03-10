@@ -5,17 +5,21 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   </head>
   <body>
-    <a-scene mindar-image="imageTargetSrc: ./targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-scene mindar-image="imageTargetSrc: targets.mind; autoStart: true; uiLoading: yes; uiScanning: yes;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      
       <a-assets>
-        <a-asset-item id="coupleModel" src="./couple_model.glb"></a-asset-item>
+        <a-asset-item id="coupleModel" src="couple.glb"></a-asset-item>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-gltf-model rotation="0 0 0 " position="0 0 0" scale="0.5 0.5 0.5" src="#coupleModel" animation="property: position; to: 0 0.1 0; dur: 1000; easing: easeOutQuad; loop: false">
+        <a-sphere radius="0.1" color="red" position="0 0 0"></a-sphere>
+        
+        <a-gltf-model rotation="0 0 0" position="0 0 0" scale="0.1 0.1 0.1" src="#coupleModel">
         </a-gltf-model>
       </a-entity>
+      
     </a-scene>
   </body>
 </html>
